@@ -1,30 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../Components/CSS/Home.css";
+// components
 import TextInput from "../Components/TextInput";
 import Notes from "../Components/Notes";
 import EmptyNotes from "../Components/EmptyNotes";
 import PinNotes from "../Components/PinNotes";
 import EditNote from "../Components/EditNote";
+import ShimmerEffect from "../Components/ShimmerEffect";
 import { DataContext } from "../Context/DataContext";
 import { LightbulbOutlined } from "@mui/icons-material";
 import { auth, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import ShimmerEffect from "../Components/ShimmerEffect";
 import { useNavigate } from "react-router-dom";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot, orderBy, query, updateDoc, } from "firebase/firestore";
 
 function Home() {
   const [loading, setLoading] = useState(true);
   const { notes, setNotes, pinNotes, searchQuery } = useContext(DataContext);
   const [user] = useAuthState(auth);
 
+  // redicet login page
   const navigate = useNavigate();
   if (!user) {
     navigate("/login");
@@ -51,6 +46,7 @@ function Home() {
     return () => unsubscribe();
   }, [db, user]);
 
+  // handle edit note
   const [isEditNote, setIsEditNote] = useState(false);
   const [selectedEditNote, setselectedEditNote] = useState({});
   function HandleEditeNote(note) {
@@ -58,19 +54,6 @@ function Home() {
     setselectedEditNote(note);
   }
 
-  const colors = [
-    "#E3DCD1",
-    "#D0E4D0",
-    "#A7D3C8",
-    "#CAB5D3",
-    "#E9D3CF",
-    "#fff",
-  ];
-  function handleColorChange(note, color) {
-    updateDoc(doc(db, `users/${user?.uid}/notes/${note.id}`), {
-      color: color,
-    });
-  }
   return (
     <main>
       {loading ? (
@@ -80,9 +63,7 @@ function Home() {
           <TextInput />
           <PinNotes />
           {pinNotes.length > 0 && (
-            <p className="note-title" style={{ color: "var(--text-color" }}>
-              OTHERS
-            </p>
+            <p className="note-title" style={{ color: "var(--text-color" }}> OTHERS </p>
           )}
           {notes.length > 0 || pinNotes.length > 0 ? (
             <div className="notes">
@@ -93,19 +74,14 @@ function Home() {
                     <Notes
                       key={index}
                       note={note}
-                      HandleEditeNote={HandleEditeNote}
-                      onChangeColor={handleColorChange}
-                      colors={colors}
-                    />
+                      HandleEditeNote={HandleEditeNote} />
                   );
                 })}
             </div>
           ) : (
             <EmptyNotes
               icon={
-                <LightbulbOutlined
-                  style={{ fontSize: "10rem", fill: "#E5E5E5" }}
-                />
+                <LightbulbOutlined style={{ fontSize: "10rem", fill: "#E5E5E5" }}/>
               }
               title="Notes you add appear here"
             />
@@ -115,8 +91,7 @@ function Home() {
               path="notes"
               selectedEditNote={selectedEditNote}
               isEditNote={isEditNote}
-              setIsEditNote={setIsEditNote}
-            />
+              setIsEditNote={setIsEditNote} />
           )}
         </>
       )}

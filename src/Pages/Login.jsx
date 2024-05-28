@@ -1,16 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "../Components/CSS/login.css";
 import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import Google from "../assets/Google.png";
 import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithPopup,
+  GoogleAuthProvider, createUserWithEmailAndPassword, getAuth,
+  signInWithEmailAndPassword, signInWithPopup
 } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 function Login() {
   const auth = getAuth(app);
@@ -21,6 +17,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   // Sign in user
   function HadnleSingin(e) {
     e.preventDefault();
@@ -40,6 +37,7 @@ function Login() {
         });
     }
   }
+
   // Sign up user
   function HadnleSingup(e) {
     e.preventDefault();
@@ -59,6 +57,7 @@ function Login() {
         });
     }
   }
+
   // Google Sign up
   function HandleGoogleSignup(e) {
     e.preventDefault();
@@ -67,10 +66,9 @@ function Login() {
     signInWithPopup(auth, provider)
       .then((result) => {
         navigate("/");
-        console.log(result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
     setUsername("");
     setEmail("");
@@ -92,8 +90,7 @@ function Login() {
                 id="username"
                 required
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
+                onChange={(e) => setUsername(e.target.value)} />
             </div>
           )}
           <label htmlFor="email">Email</label>
@@ -104,8 +101,7 @@ function Login() {
             id="email"
             value={email}
             required
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            onChange={(e) => setEmail(e.target.value)} />
           <label htmlFor="password">Password</label>
           <br />
           <input
@@ -114,8 +110,7 @@ function Login() {
             id="password"
             value={password}
             required
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            onChange={(e) => setPassword(e.target.value)} />
           <p style={{ color: "red" }}>{error}</p>
           <div className="register-btns">
             <button
@@ -123,8 +118,7 @@ function Login() {
               className={
                 action === "Sign in" ? "active-btn-color" : "disable-btn-color"
               }
-              onClick={HadnleSingin}
-            >
+              onClick={HadnleSingin}>
               Sign in
             </button>
             <button
@@ -132,8 +126,7 @@ function Login() {
               className={
                 action === "Sign up" ? "active-btn-color" : "disable-btn-color"
               }
-              onClick={HadnleSingup}
-            >
+              onClick={HadnleSingup}>
               Sign up
             </button>
           </div>

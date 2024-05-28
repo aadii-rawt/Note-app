@@ -19,16 +19,7 @@ function DataProvider({ children }) {
     deleteDoc(doc(db, `users/${user?.uid}/${remove}/${note.id}`));
   }
 
-  // edit note image
-  async function handleEditImage(e, setUploadedImg, setNoteImg) {
-    var filepath = e.target.files[0];
-    const imgs = ref(imgDb, `imgs/${crypto.randomUUID()}`);
-    const data = await uploadBytes(imgs, filepath);
-    const val = await getDownloadURL(data.ref);
-    setUploadedImg(val);
-    setNoteImg(URL.createObjectURL(filepath));
-  }
-
+  // edit note
   function handleUpdate(editPath, id, uploadedImg, text, title) {
     updateDoc(doc(db, `users/${user?.uid}/${editPath}/${id}`), {
       id: id,
@@ -38,21 +29,21 @@ function DataProvider({ children }) {
     });
   }
 
+  // color palette
+  const colors = ["#E3DCD1", "#D0E4D0", "#A7D3C8", "#CAB5D3", "#E9D3CF", "#fff"];
+  // change note theme
+  function onChangeColor(note, color) {
+    updateDoc(doc(db, `users/${user?.uid}/notes/${note.id}`), {
+      color: color,
+    });
+  }
+
   return (
     <DataContext.Provider
       value={{
-        notes,
-        setNotes,
-        archiveNotes,
-        setArchiveNotes,
-        deletedNotes,
-        setDeletedNotes,
-        pinNotes,
-        setPinNotes,
-        handleNote,
-        handleEditImage,
-        handleUpdate,
-        searchQuery, setSearchQuery
+        notes, setNotes, archiveNotes, setArchiveNotes, deletedNotes,
+        setDeletedNotes, pinNotes, setPinNotes, handleNote,
+        handleUpdate, searchQuery, setSearchQuery, colors, onChangeColor
       }}>
       {children}
     </DataContext.Provider>

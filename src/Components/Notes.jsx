@@ -1,27 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./CSS/Notes.css";
 // material ui icon
-import {Close, NotificationAdd, PaletteOutlined, WatchLaterOutlined } from "@mui/icons-material";
+import { Close, NotificationAdd, PaletteOutlined, WatchLaterOutlined } from "@mui/icons-material";
 import { ImageOutlined } from "@mui/icons-material";
 import { ArchiveOutlined } from "@mui/icons-material";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
 import { PushPinOutlined } from "@mui/icons-material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, imgDb } from "../firebase";
-import {
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc, } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Reminder from "./Reminder";
 import { DataContext } from "../Context/DataContext";
 
-function Notes({ note, HandleEditeNote, onChangeColor, colors }) {
+function Notes({ note, HandleEditeNote}) {
   const [colorPalette, setColorPalette] = useState(false);
   const noteRef = useRef();
   const colorPaletteRef = useRef();
   const [user] = useAuthState(auth);
-  const { notes, setNotes, handleNote} = useContext(DataContext);
+  const { notes, setNotes, handleNote, colors, onChangeColor } = useContext(DataContext);
 
   // Add Image or update image
   async function HandleNoteImage(e, note) {

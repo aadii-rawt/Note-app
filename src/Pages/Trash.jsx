@@ -9,12 +9,10 @@ import { auth, db } from "../firebase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 function Trash() {
-  const { deletedNotes, setDeletedNotes, searchQuery } =
-    useContext(DataContext);
+  const { deletedNotes, setDeletedNotes, searchQuery } = useContext(DataContext);
   const [user] = useAuthState(auth);
   useEffect(() => {
     // fetch data from database
-    if (navigator.onLine) {
       const notesQuery = query(
         collection(db, `users/${user?.uid}/trash`),
         orderBy("timestamp", "desc")
@@ -31,18 +29,13 @@ function Trash() {
         setDeletedNotes(notesData);
       });
       return () => unsubscribe();
-    } else {
-      console.warn("No Internet Connetion");
-    }
   }, [db, user]);
   return (
     <main>
       <div className="notes">
         {deletedNotes.length > 0 ? (
           <div className="notes">
-            {deletedNotes
-              .filter((note) => note.text.includes(searchQuery))
-              .map((note, index) => {
+            {deletedNotes.filter((note) => note.text.includes(searchQuery)).map((note, index) => {
                 return <TrashNotes key={index} note={note} />;
               })}
           </div>

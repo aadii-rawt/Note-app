@@ -2,31 +2,18 @@ import React, { useContext, useState } from "react";
 import "./CSS/Editnote.css";
 import { DeleteRounded, ImageOutlined } from "@mui/icons-material";
 import { createPortal } from "react-dom";
-import { doc, updateDoc } from "firebase/firestore";
-import { auth, db, imgDb } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { imgDb } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { DataContext } from "../Context/DataContext";
 
-function EditNote({path, selectedEditNote, isEditNote, setIsEditNote }) {
-  const {handleUpdate} = useContext(DataContext);
+function EditNote({ path, selectedEditNote, isEditNote, setIsEditNote }) {
+  const { handleUpdate } = useContext(DataContext);
   const [title, setTitle] = useState(selectedEditNote.title);
   const [text, setText] = useState(selectedEditNote.text);
   const [noteImg, setNoteImg] = useState(selectedEditNote.image);
-  const [uploadedImg, setUploadedImg] = useState("");
-  const [user] = useAuthState(auth);
-  // Update Note
-  // function HandleUpdate() {
-  //   updateDoc(doc(db, `users/${user?.uid}/notes/${selectedEditNote.id}`), {
-  //     id: selectedEditNote.id,
-  //     image: uploadedImg,
-  //     text: text,
-  //     title: title,
-  //   });
-  //   setIsEditNote(!isEditNote);
-  // }
-  // Update Image
+  const [uploadedImg, setUploadedImg] = useState(selectedEditNote.image);
 
+  // edit note image
   async function HandleNoteImage(e) {
     var filepath = e.target.files[0];
     const imgs = ref(imgDb, `imgs/${crypto.randomUUID()}`);
@@ -34,12 +21,6 @@ function EditNote({path, selectedEditNote, isEditNote, setIsEditNote }) {
     const val = await getDownloadURL(data.ref);
     setUploadedImg(val);
     setNoteImg(URL.createObjectURL(filepath));
-    // updateDoc(doc(db, `users/${user?.uid}/notes/${selectedEditNote.id}`), {
-    //   id: selectedEditNote.id,
-    //   image: noteImg,
-    //   text: text,
-    //   title: title,
-    // });
   }
 
   return createPortal(
@@ -61,9 +42,10 @@ function EditNote({path, selectedEditNote, isEditNote, setIsEditNote }) {
                     style={{ fontSize: "1.3rem" }}
                   />
                 </div>
-                <div className="tool-icon" onClick={() => { 
+                <div className="tool-icon" onClick={() => {
                   setUploadedImg("")
-                  setNoteImg("")}}>
+                  setNoteImg("")
+                }}>
                   <DeleteRounded
                     className="icon"
                     style={{ fontSize: "1.3rem" }}
@@ -94,8 +76,8 @@ function EditNote({path, selectedEditNote, isEditNote, setIsEditNote }) {
             handleUpdate(path, selectedEditNote.id, uploadedImg, text, title)
             setIsEditNote(!isEditNote);
           }}>Close</button>
+        </div>
       </div>
-    </div>
     </div >,
     document.getElementById("portal")
   );

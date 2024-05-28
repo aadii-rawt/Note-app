@@ -1,8 +1,5 @@
-import {
-  BrowserRouter as BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as BrowserRouter, Routes, Route, } from "react-router-dom";
+// components
 import Layout from "./Components/Layout";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
@@ -11,7 +8,7 @@ import Trash from "./Pages/Trash";
 import NoInternet from "./Components/NoInternet";
 
 function App() {
-  // if (!navigator.onLine) return <NoInternet />
+  if (!navigator.onLine) return <NoInternet />
   return (
     <>
       <BrowserRouter>

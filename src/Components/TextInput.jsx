@@ -32,6 +32,7 @@ function TextInput() {
   const [showTitleInput, setShowTitleInput] = useState(false);
   const [pinActive, setPinActive] = useState(false);
   const inputRef = useRef();
+  const textareaRef = useRef();
   const [item, setItem] = useState({
     title: "",
     text: "",
@@ -45,6 +46,9 @@ function TextInput() {
       ...prev,
       [name]: value,
     }));
+    if (name == "text") {
+      adjustTextareaHeight();
+    }
   }
   // Voice typing
   const [isMicON, setIsMicON] = useState(false);
@@ -100,6 +104,7 @@ function TextInput() {
       resetTranscript();
       setNoteImage("");
       setUploadedImg("");
+      resetTextareaHeight();
     }
   }
 
@@ -115,6 +120,21 @@ function TextInput() {
       document.removeEventListener("mousedown", inputHandler);
     };
   });
+
+  // adjust height of input when content is too big
+  function adjustTextareaHeight() {
+    const textarea = textareaRef.current;
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+  }
+  function resetTextareaHeight() {
+    const textarea = textareaRef.current;
+    textarea.style.height = "auto";
+  }
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [setNotes]);
+
   return (
     <div className="input-conatiner">
       <div className="input-box" ref={inputRef}>
@@ -132,7 +152,7 @@ function TextInput() {
               />
             )}
             <textarea
-              cols={60}
+               ref={textareaRef}
               rows={1}
               type="text"
               aria-multiline="true"

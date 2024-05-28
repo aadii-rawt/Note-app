@@ -18,9 +18,9 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { DataContext } from "../Context/DataContext";
 import Reminder from "./Reminder";
 
-function ArchiveNotes({ note, HandleEditeNote, onChangeColor, colors }) {
+function ArchiveNotes({ note, HandleEditeNote }) {
   const { archiveNotes,
-    setArchiveNotes, handleNote } = useContext(DataContext);
+    setArchiveNotes, handleNote, onChangeColor, colors } = useContext(DataContext);
   const [user] = useAuthState(auth);
   const [colorPalette, setColorPalette] = useState(false);
   const noteRef = useRef();
