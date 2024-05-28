@@ -56,7 +56,6 @@ main{
       background-color:rgba(164, 161, 161, 0.605);
   }
   100% {
-      /* background-color:rgba(164, 161, 161, 0.715); */
       background-color: rgba(164, 161, 161, 0.799);
   }
 }

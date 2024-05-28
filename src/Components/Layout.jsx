@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () =>  {
     const [menu,setMenu] = useState(false)
-   
     return (
       <>
         <Header setMenu={setMenu} />

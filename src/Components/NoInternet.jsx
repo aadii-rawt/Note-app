@@ -1,12 +1,11 @@
 import React from 'react'
-import noInternetImage from '../assets/no-internet.png'
 import './CSS/noInternet.css'
 
+import noInternetImage from '../assets/no-internet.png'
 function NoInternet() {
     function RefreshPage() {
         window.location.reload()
     }
-
     return (
         <div className='noInternet-container'>
             <div className="noInternet-box">
@@ -14,7 +13,7 @@ function NoInternet() {
                 <h1>Whooops!</h1>
                 <p>No Internet connection found check your connection or try again</p>
                 <button className='tryagain-btn'
-                    onClick={RefreshPage}>Try Again</button>
+                onClick={RefreshPage}>Try Again</button>
             </div>
         </div>
     )

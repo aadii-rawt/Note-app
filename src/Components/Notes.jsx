@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./CSS/Notes.css";
 // material ui icon
-import { Archive, Close, NotificationAdd, PaletteOutlined, WatchLaterOutlined } from "@mui/icons-material";
+import {Close, NotificationAdd, PaletteOutlined, WatchLaterOutlined } from "@mui/icons-material";
 import { ImageOutlined } from "@mui/icons-material";
 import { ArchiveOutlined } from "@mui/icons-material";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
