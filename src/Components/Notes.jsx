@@ -13,7 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Reminder from "./Reminder";
 import { DataContext } from "../Context/DataContext";
 
-function Notes({ note, HandleEditeNote}) {
+function Notes({ note, HandleEditeNote }) {
   const [colorPalette, setColorPalette] = useState(false);
   const noteRef = useRef();
   const colorPaletteRef = useRef();
@@ -38,6 +38,7 @@ function Notes({ note, HandleEditeNote}) {
     });
   }, [notes]);
 
+  // set the reminder
   const [isReminder, setIsReminder] = useState(false);
   function scheduleReminder(note) {
     const now = new Date().getTime();
@@ -57,6 +58,7 @@ function Notes({ note, HandleEditeNote}) {
     setNotes(notes.map((note) => (note.id === id ? { ...note, reminder } : note)));
   }
 
+  // delete reminder
   function deleteReminder(id) {
     const note = notes.find((note) => note.id === id);
     if (note.timeoutId) {
@@ -66,12 +68,8 @@ function Notes({ note, HandleEditeNote}) {
   }
   return (
     <>
-      <div
-        className="note"
-        style={{ background: note?.color }}
-        ref={noteRef}
-        onClick={() => HandleEditeNote(note)}
-      >
+      <div className="note" style={{ background: note?.color }} ref={noteRef}
+        onClick={() => HandleEditeNote(note)}>
         <div className="note-content">
           {!note.text && !note.title && !note.image ? (
             <p className="empty-content">Empty Note</p>

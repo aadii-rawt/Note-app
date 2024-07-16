@@ -2,14 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../Context/DataContext";
 import PinedNotes from "./PinedNotes";
 import EditNote from "./EditNote";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -43,20 +36,7 @@ function PinNotes({ HandleEditeNote }) {
     setIsEditPinNote(!isEditPintNote);
     setSelectedNote(note);
   }
-  // change note theme
-  const colors = [
-    "#E3DCD1",
-    "#D0E4D0",
-    "#A7D3C8",
-    "#CAB5D3",
-    "#E9D3CF",
-    "#fff",
-  ];
-  function handleColorChange(note, color) {
-    updateDoc(doc(db, `users/${user?.uid}/pinNotes/${note.id}`), {
-      color: color,
-    });
-  }
+
   return (
     <>
       <div>
@@ -72,11 +52,7 @@ function PinNotes({ HandleEditeNote }) {
                   return (
                     <PinedNotes
                       key={index}
-                      note={note}
-                      HandleEditeNote={HandleEditeNote}
-                      onChangeColor={handleColorChange}
-                      colors={colors}
-                    />
+                      note={note} />
                   );
                 })}
             </div>

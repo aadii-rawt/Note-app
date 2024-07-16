@@ -1,4 +1,3 @@
-import { Padding } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -6,6 +5,7 @@ function Reminder({ isReminder, setIsReminder, note, onsetReminder, onDeleteRemi
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
 
+    // notification permission
     if ("Notification" in window) {
         Notification.requestPermission().then((permission) => {
             if (Notification.permission !== "granted") {
@@ -13,6 +13,8 @@ function Reminder({ isReminder, setIsReminder, note, onsetReminder, onDeleteRemi
             }
         })
     }
+
+    // set reminder
     function handleSetReminder(e) {
         e.preventDefault()
         if (date || time) {
@@ -30,6 +32,7 @@ function Reminder({ isReminder, setIsReminder, note, onsetReminder, onDeleteRemi
             alert("Please enter Date or Time")
         }
     }
+    // style
     const reminderBox = {
         padding: "20px"
     }

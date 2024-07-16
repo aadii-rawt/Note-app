@@ -15,7 +15,7 @@ function Archive() {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    // fetch data from database
+    // fetch data from databasei
       const notesQuery = query(
         collection(db, `users/${user?.uid}/archiveNotes`),
         orderBy("timestamp", "desc")

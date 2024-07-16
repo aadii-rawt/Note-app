@@ -5,13 +5,7 @@ import { ImageOutlined } from "@mui/icons-material";
 import { UnarchiveOutlined } from "@mui/icons-material";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
 import { PushPinOutlined } from "@mui/icons-material";
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { auth, db, imgDb } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -19,8 +13,7 @@ import { DataContext } from "../Context/DataContext";
 import Reminder from "./Reminder";
 
 function ArchiveNotes({ note, HandleEditeNote }) {
-  const { archiveNotes,
-    setArchiveNotes, handleNote, onChangeColor, colors } = useContext(DataContext);
+  const { archiveNotes, setArchiveNotes, handleNote, onChangeColor, colors } = useContext(DataContext);
   const [user] = useAuthState(auth);
   const [colorPalette, setColorPalette] = useState(false);
   const noteRef = useRef();
@@ -47,6 +40,7 @@ function ArchiveNotes({ note, HandleEditeNote }) {
     });
   }, [archiveNotes]);
 
+  // set reminder
   const [isReminder, setIsReminder] = useState(false);
   function scheduleReminder(note) {
     const now = new Date().getTime();
@@ -57,7 +51,6 @@ function ArchiveNotes({ note, HandleEditeNote }) {
         new Notification(note.text, {
           body: `Reminder for your note`,
         });
-        console.log("Trigger");
         deleteReminder(note.id);
       }, timeDiff);
     }
@@ -67,6 +60,7 @@ function ArchiveNotes({ note, HandleEditeNote }) {
     setArchiveNotes(archiveNotes.map((note) => (note.id === id ? { ...note, reminder } : note)));
   }
 
+  // delete reminder
   function deleteReminder(id) {
     const note = archiveNotes.find((note) => note.id === id);
     if (note.timeoutId) {

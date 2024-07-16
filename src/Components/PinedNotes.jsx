@@ -1,24 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-  Close,
-  NotificationAdd,
-  PaletteOutlined,
-  WatchLaterOutlined,
-} from "@mui/icons-material";
+import { Close, NotificationAdd, PaletteOutlined, WatchLaterOutlined } from "@mui/icons-material";
 import { ImageOutlined } from "@mui/icons-material";
 import { ArchiveOutlined } from "@mui/icons-material";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
 import { PushPin } from "@mui/icons-material";
 import { DataContext } from "../Context/DataContext";
-// import EditPinNote from "./EditPinNote";
 import { auth, db, imgDb } from "../firebase";
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Reminder from "./Reminder";
@@ -30,6 +18,7 @@ function PinedNotes({ note, HandleEditeNote, onChangeColor, colors }) {
   const colorPaletteRef = useRef();
   const [user] = useAuthState(auth);
 
+  // update note image
   async function HandleNoteImage(e, note) {
     const imgs = ref(imgDb, `imgs/${crypto.randomUUID()}`);
     const data = await uploadBytes(imgs, e.target.files[0]);
@@ -50,6 +39,7 @@ function PinedNotes({ note, HandleEditeNote, onChangeColor, colors }) {
     });
   }, [pinNotes]);
 
+  // to set reminder
   const [isReminder, setIsReminder] = useState(false);
   function scheduleReminder(note) {
     const now = new Date().getTime();
@@ -77,7 +67,6 @@ function PinedNotes({ note, HandleEditeNote, onChangeColor, colors }) {
       clearTimeout(note.timeoutId);
     }
     note.reminder = "";
-    console.log("delete");
   }
 
   return (
@@ -86,8 +75,7 @@ function PinedNotes({ note, HandleEditeNote, onChangeColor, colors }) {
         className="note"
         style={{ background: note?.color }}
         ref={noteRef}
-        onClick={() => HandleEditeNote(note)}
-      >
+        onClick={() => HandleEditeNote(note)}>
         <div className="note-content">
           {!note.text && !note.title && !note.image ? (
             <p className="empty-content">Empty Note</p>
