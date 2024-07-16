@@ -26,23 +26,11 @@ function Home() {
     async function handleSingin() {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(auth, 'user@gmail.com', 'user@123')
-        // .then((userCredential) => {
-        //   navigate("/");
-        //   setUsername("");
-        //   setEmail("");
-        //   setPassword("");
-        // })
-        // .catch((error) => {
-        //   const errorMessage = error.message;
-        //   setError(errorMessage);
-        // });
+
     }
     handleSingin()
   })
-// redicet login page
-// if (!user) {
-//   navigate("/login");
-// }
+
 
 useEffect(() => {
   // fetch data from database
